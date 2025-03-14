@@ -93,15 +93,21 @@
 		
 		<!-- Pagination -->
 		<div class="container" th:if="${!paging.isEmpty()}">
-			<nav aria-label="Page navigation example">
-			  <ul class="pagination">
-			    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-			    <li class="page-item"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
-			    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-			  </ul>
-			</nav>
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+					<a class="page-link" th:href="@{|?page={paging.number}|}">Previous</a>
+				</li>
+				<li class="page-item"
+					th:each="page : ${#numbers.sequence(1, paging.totalPages)}"
+					th:if="${page >= paging.number-2 and page <= paging.number+4}"
+					th:classappend="${page == paging.number+1} ? 'active'"
+				>
+					<a class="page-link" th:href="@{|?page=${page}|}" th:text="${page}"></a>
+				</li>
+				<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+					<a class="page-link" th:href="@{|?page={paging.number+2}|}">Next</a>
+				</li>
+			</ul>
 		</div>
 		
 				
