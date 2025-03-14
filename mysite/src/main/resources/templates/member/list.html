@@ -99,38 +99,45 @@
 			.mypaging ul li:last-child a{border-radius: 20px !important; }
 			.mypaging ul li:nth-last-child(2) a{border-radius: 20px; margin-left: 40px !important;}
 		</style>
-		<div class="container mypaging" th:if="${!paging.isEmpty()}">
-			<th:block th:with="cPage=${paging.number + 1}">
-				<p class="small text-end text-info fw-bold">Current Page : <span th:text="${cPage}"></span></p>
+		<div class="container mypaging"
+			 th:if="${!paging.isEmpty()}"
+			 th:with="
+			 	cPage=${paging.number+1},
+			 	prev=${cPage-1},
+			 	next=${cPage+1},
+			 	lRange=${cPage-3},
+			 	rRange=${cPage+3}
+			 	"
+			 >
 			
-				<ul class="pagination justify-content-center">
-					
-					<li class="page-item">
-						<a class="page-link" th:href="@{|?page=1|}">&laquo;</a>
-					</li>
+			<p class="small text-end text-info fw-bold">Current Page : <span th:text="${cPage}"></span></p>
+			<ul class="pagination justify-content-center">
 				
-					<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-						<a class="page-link" th:href="@{|?page=${cPage-1}|}">Previous</a>
-					</li>
-					
-					<li class="page-item"
-						th:each="page : ${#numbers.sequence(1, paging.totalPages)}"
-						th:if="${page >= cPage-3 and page <= cPage+3}"
-						th:classappend="${page == cPage} ? 'active'"
-					>
-						<a class="page-link" th:href="@{|?page=${page}|}" th:text="${page}"></a>
-					</li>
-					
-					<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-						<a class="page-link" th:href="@{|?page=${cPage+1}|}">Next</a>
-					</li>
-					
-					<li class="page-item">
-						<a class="page-link" th:href="@{|?page=${paging.totalPages}|}">&raquo;</a>
-					</li>
-					
-				</ul>
-			</th:block>
+				<li class="page-item">
+					<a class="page-link" th:href="@{|?page=1|}">&laquo;</a>
+				</li>
+			
+				<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+					<a class="page-link" th:href="@{|?page=${prev}|}">Previous</a>
+				</li>
+				
+				<li class="page-item"
+					th:each="page : ${#numbers.sequence(1, paging.totalPages)}"
+					th:if="${page >= lRange and page <= rRange}"
+					th:classappend="${page == cPage} ? 'active'"
+				>
+					<a class="page-link" th:href="@{|?page=${page}|}" th:text="${page}"></a>
+				</li>
+				
+				<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+					<a class="page-link" th:href="@{|?page=${next}|}">Next</a>
+				</li>
+				
+				<li class="page-item">
+					<a class="page-link" th:href="@{|?page=${paging.totalPages}|}">&raquo;</a>
+				</li>
+				
+			</ul>
 		</div>
 		
 				
