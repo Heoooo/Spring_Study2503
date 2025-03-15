@@ -36,4 +36,10 @@ public class MemberController {
 		return "test";
 	}
 	
+	
+	//Create
+	@GetMapping("/member/create")
+	public String create() {
+		return "member/create";
+	}
 }

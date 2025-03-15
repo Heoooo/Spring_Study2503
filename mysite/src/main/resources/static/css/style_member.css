@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+
+.mypaging ul li {padding:5px;}
+.mypaging ul li:first-child a{border-radius: 20px !important; }
+.mypaging ul li:nth-child(2) a{border-radius: 20px; margin-right: 40px;}
+.mypaging ul li:last-child a{border-radius: 20px !important; }
+.mypaging ul li:nth-last-child(2) a{border-radius: 20px; margin-left: 40px !important;}
+
+
+.myCreate ul li {line-height: 3rem; list-style: none; margin:30px;}
+.myCreate .input1 {
+	width: 100%;
+	height: 40px;
+	background: #f0f0f0;
+	border: 1px solid #666;
+}
