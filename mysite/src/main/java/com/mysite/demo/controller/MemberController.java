@@ -29,4 +29,11 @@ public class MemberController {
 		return "member/list";
 	}
 	
+	
+	//Template Layout
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
+	
 }
