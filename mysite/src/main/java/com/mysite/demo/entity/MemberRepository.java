@@ -8,4 +8,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer>{
 	
 	//List
 	public Page<Member> findAll(Pageable pageable);
+	
+	//I D Check
+	public boolean existsById(String id);
 }

@@ -50,6 +50,13 @@ public class MemberController {
 	@PostMapping("/member/create")
 	public String insert(MemberCreateDTO memberCreateDTO, Model model) {
 		
+		//ID 중복 체크
+		boolean IdCheckRes = memberService.checkIdDuplication(memberCreateDTO.getId());
+		if (IdCheckRes) {
+			model.addAttribute("msg", "ID 중복 에러 : 입력하신 ID 정보는 이미 가입되어 있습니다.");
+			return "member/error";
+		}
+		
 		//MemberService > insert() 호출
 		memberService.insert(memberCreateDTO);
 		

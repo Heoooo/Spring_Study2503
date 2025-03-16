@@ -49,4 +49,11 @@ public class MemberService {
 		//4.Return
 		return member.getIdx();
 	}
+
+	
+	//DB:ID Check
+	public boolean checkIdDuplication(String id) {
+		boolean IdCheckValue = memberRepository.existsById(id);
+		return IdCheckValue;
+	}
 }
