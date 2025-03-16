@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -62,5 +63,43 @@ public class MemberController {
 		
 		//Return
 		return "redirect:/member/list";
+	}
+	
+	
+	//Delete UI
+	@GetMapping("/member/delete/{idx}")
+	public String deleteUi(Model model, @PathVariable("idx") Integer idx) {
+		
+		//Model 데이터 추가
+		model.addAttribute("idx", idx);
+		
+		//Return
+		return "member/delete";
+	}
+	
+	
+	//Delete
+	@PostMapping("/member/delete/{idx}")
+	public String delete(@PathVariable("idx") Integer idx, @RequestParam("pw") String userPw) {
+		
+		//MemberService > delete() 호출
+		String res = memberService.delete(idx, userPw);
+		
+		//Return
+		return "redirect:"+res+"/"+idx;
+	}
+	
+	
+	//Delete::Fail
+	@GetMapping("/member/delete-fail/{idx}")
+	public String deleteFail(Model model, @PathVariable("idx") Integer idx) {
+		model.addAttribute("idx", idx);
+		return "member/delete-fail";
+	}
+	
+	//Delete::Success
+	@GetMapping("/member/delete-success/{idx}")
+	public String deleteFail(@PathVariable("idx") Integer idx) {
+		return "member/delete-success";
 	}
 }

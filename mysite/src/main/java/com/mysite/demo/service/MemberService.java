@@ -1,5 +1,7 @@
 package com.mysite.demo.service;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,9 +53,25 @@ public class MemberService {
 	}
 
 	
-	//DB:ID Check
+	//DB::ID Check
 	public boolean checkIdDuplication(String id) {
 		boolean IdCheckValue = memberRepository.existsById(id);
 		return IdCheckValue;
+	}
+	
+	
+	//DB::Delete
+	public String delete(Integer idx, String userPw) throws NoSuchElementException{
+		
+		//DB::Find
+		Member member = memberRepository.findById(idx).orElseThrow();
+		
+		if(userPw.equals(member.getPw())) {
+			memberRepository.delete(member);
+			return "/member/delete-success";
+		}
+		else {
+			return "/member/delete-fail";
+		}
 	}
 }

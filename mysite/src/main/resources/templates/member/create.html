@@ -12,6 +12,32 @@
 		</div>
 		
 		<!-- Form -->
+		<style>
+			.myPlaceholder input::-webkit-input-placeholder {
+				font-size: .9rem;
+				color: #bbb;
+			}
+		</style>
+		<div class="container myPlaceholder mb-5">
+			<form action="/member/create" method="POST" autocomplete="off">
+			  <div class="mb-3">
+			    <label for="exampleInputId" class="form-label">ID</label>
+			    <input type="text" class="form-control" name="id" placeholder="ID를 16자 이내로 입력해주세요" maxlength=16 required>
+			  </div>
+			  <div class="mb-3">
+			    <label for="exampleInputPassword" class="form-label">Password</label>
+			    <input type="password" class="form-control" name="pw" placeholder="Password를 16자 이내로 입력해주세요" maxlength=16 required>
+			  </div>
+			  <div class="mb-3">
+			    <label for="exampleInputEmail" class="form-label">Email address</label>
+			    <input type="email" class="form-control" name="email" placeholder="Email을 60자 이내로 형식에 맞게 입력해주세요" maxlength=60 required aria-describedby="emailHelp">
+			    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+			  </div>
+			  <button type="submit" class="btn btn-primary btn-sm">회원 가입</button>
+			  <button class="btn btn-secondary btn-sm" onclick="location.href='/member/list'; return false;">회원 리스트 페이지로 이동</button>
+			</form>
+		</div>
+		<!--
 		<div class="container myCreate mb-5">
 			<form name="regForm" action="/member/create" method="POST" autocomplete="off">
 				<hr>
@@ -25,5 +51,6 @@
 				<button class="btn btn-secondary btn-sm" onclick="location.href='/member/list'; return false;">회원 목록(리스트)</button>
 			</form>
 		</div>
+		-->
 	</th:block>
 </html>
