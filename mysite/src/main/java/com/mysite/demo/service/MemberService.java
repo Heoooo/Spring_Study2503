@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
+import com.mysite.demo.dto.MemberCreateDTO;
 import com.mysite.demo.entity.Member;
 import com.mysite.demo.entity.MemberRepository;
 
@@ -32,5 +33,20 @@ public class MemberService {
 		pageable = PageRequest.of(page, 3, Sort.by(Order.desc("idx")));
 		
 		return memberRepository.findAll(pageable);
+	}
+
+	
+	//DB::Insert
+	public Integer insert(MemberCreateDTO memberCreateDTO) {
+		//1.객체 생성
+		Member member = new Member();
+		//2.Setter + DTO Getter
+		member.setId(memberCreateDTO.getId());
+		member.setPw(memberCreateDTO.getPw());
+		member.setEmail(memberCreateDTO.getEmail());
+		//3.Save
+		memberRepository.save(member);
+		//4.Return
+		return member.getIdx();
 	}
 }
