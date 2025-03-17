@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout_member}"
+	>
+	<th:block layout:fragment="contents">
+		<div class="container my-5">
+			<h5 th:text="${keyword}" class="text-primary"></h5>
+		</div>
+	</th:block>
+</html>

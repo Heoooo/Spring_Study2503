@@ -102,4 +102,16 @@ public class MemberController {
 	public String deleteFail(@PathVariable("idx") Integer idx) {
 		return "member/delete-success";
 	}
+	
+	
+	//Search
+	@GetMapping("/member/search")
+	public String searchList(Model model, @RequestParam("keyword") String keyword, @RequestParam(value="page", defaultValue="0") Integer page) {
+		
+		//Model 데이터 추가
+		model.addAttribute("keyword", keyword);		
+		
+		//Return
+		return "member/searchList";
+	}
 }
