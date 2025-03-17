@@ -5,8 +5,100 @@
 	layout:decorate="~{layout/layout_member}"
 	>
 	<th:block layout:fragment="contents">
-		<div class="container my-5">
-			<h5 th:text="${keyword}" class="text-primary"></h5>
+		
+		<!-- Table -->
+		<div class="container">
+			<div class="mt-5 mb-2">
+				CurrentPage : <span class="text-danger fw-bold" th:text="${paging.number+1}"></span> /
+				TotalPages : <span class="text-danger fw-bold" th:text="${paging.totalPages}"></span> /
+				TotalRecords : <span class="text-danger fw-bold" th:text="${paging.totalElements}"></span>
+			</div>
+			<table class="table table-striped table-hover text-center" style="border: 0px solid #ccc !important">
+				<caption>List of members</caption>
+				<thead>
+					<tr class="table-dark">
+						<th>#</th>
+						<th>ID</th>
+						<th>Password</th>
+						<th>Email</th>
+						<th>Update</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="align-middle" th:each="member : ${paging}">
+						<td th:text="${member.idx}"></td>
+						<td th:text="${member.id}"></td>
+						<td th:text="${member.pw}"></td>
+						<td th:text="${member.email}"></td>
+						<td>
+							<button 
+								class="btn btn-outline-primary btn-sm"
+								th:onclick="'location.href=\'/member/update/'+${member.idx}+'\';'"
+							>수정</button>
+						</td>
+						<td>
+							<button 
+								class="btn btn-outline-danger btn-sm"
+								th:onclick="'location.href=\'/member/delete/'+${member.idx}+'\';'"
+							>삭제</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
+		
+		
+		<!-- Pagination -->
+		<div class="container mypaging"
+			 th:if="${!paging.isEmpty()}"
+			 th:with="
+			 	cPage=${paging.number+1},
+			 	prev=${cPage-1},
+			 	next=${cPage+1},
+			 	lRange=${cPage-3},
+			 	rRange=${cPage+3}
+			 	"
+			 >
+			
+			<p class="small text-end text-info fw-bold">Current Page : <span th:text="${cPage}"></span></p>
+			<ul class="pagination justify-content-center">
+				
+				<li class="page-item">
+					<a class="page-link" th:href="@{|?page=1|}">&laquo;</a>
+				</li>
+			
+				<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+					<a class="page-link" th:href="@{|?page=${prev}|}">Previous</a>
+				</li>
+				
+				<li class="page-item"
+					th:each="page : ${#numbers.sequence(1, paging.totalPages)}"
+					th:if="${page >= lRange and page <= rRange}"
+					th:classappend="${page == cPage} ? 'active'"
+				>
+					<a class="page-link" th:href="@{|?keyword=${keyword}&page=${page}|}" th:text="${page}"></a>
+				</li>
+				
+				<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+					<a class="page-link" th:href="@{|?page=${next}|}">Next</a>
+				</li>
+				
+				<li class="page-item">
+					<a class="page-link" th:href="@{|?page=${paging.totalPages}|}">&raquo;</a>
+				</li>
+				
+			</ul>
+		</div>
+		
+				
+		<!-- Button -->
+		<div class="container mb-5">
+			<hr>
+			<button class="btn btn-success btn-sm" onclick="location.href='/member/create';">회원 가입</button>
+		</div>
+		
+		
+		
 	</th:block>
 </html>

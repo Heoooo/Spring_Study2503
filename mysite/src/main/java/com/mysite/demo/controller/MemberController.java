@@ -108,8 +108,12 @@ public class MemberController {
 	@GetMapping("/member/search")
 	public String searchList(Model model, @RequestParam("keyword") String keyword, @RequestParam(value="page", defaultValue="0") Integer page) {
 		
+		//MemberService > searchList() 호출=> page 넣으면서
+		Page<Member> paging = memberService.searchList(keyword, page);
+		
 		//Model 데이터 추가
-		model.addAttribute("keyword", keyword);		
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("paging", paging);		
 		
 		//Return
 		return "member/searchList";

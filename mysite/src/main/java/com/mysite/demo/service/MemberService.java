@@ -74,4 +74,21 @@ public class MemberService {
 			return "/member/delete-fail";
 		}
 	}
+	
+	
+	//DB::Search
+	public Page<Member> searchList(String keyword, Integer page) {
+		if (page == 0) {
+			page = 0;
+		}
+		else {
+			page -= 1;
+		}
+		
+		//pageable 변수
+		Pageable pageable = null;
+		pageable = PageRequest.of(page, 3, Sort.by(Order.desc("idx")));
+		
+		return memberRepository.findById(keyword, pageable);
+	}
 }
