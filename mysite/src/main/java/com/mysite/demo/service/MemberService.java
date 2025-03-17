@@ -2,6 +2,7 @@ package com.mysite.demo.service;
 
 import java.util.NoSuchElementException;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,12 +43,18 @@ public class MemberService {
 	public Integer insert(MemberCreateDTO memberCreateDTO) {
 		//1.객체 생성
 		Member member = new Member();
+		
+		//비밀번호 암호화: BCrypt 알고리즘 사용(랜덤 솔트와 함께 사용, 60자리 암호화 문자열 생성)
+		String hashedUserPw = BCrypt.hashpw(memberCreateDTO.getPw(), BCrypt.gensalt());
+		
 		//2.Setter + DTO Getter
 		member.setId(memberCreateDTO.getId());
-		member.setPw(memberCreateDTO.getPw());
+		member.setPw(hashedUserPw);
 		member.setEmail(memberCreateDTO.getEmail());
+		
 		//3.Save
 		memberRepository.save(member);
+		
 		//4.Return
 		return member.getIdx();
 	}
@@ -66,7 +73,7 @@ public class MemberService {
 		//DB::Find
 		Member member = memberRepository.findById(idx).orElseThrow();
 		
-		if(userPw.equals(member.getPw())) {
+		if(BCrypt.checkpw(userPw, member.getPw())) {
 			memberRepository.delete(member);
 			return "/member/delete-success";
 		}

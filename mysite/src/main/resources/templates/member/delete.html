@@ -15,12 +15,11 @@
 		<!-- Form -->
 		<div class="container myCreate mb-5">
 			<form th:action="@{|/member/delete/${idx}|}" method="POST" autocomplete="off">
-				<ul>
-					<li>
-						<input class="input1" type="password" name="pw" placeholder="회원 가입 시 비밀번호를 입력해주세요!" maxlength=16 required>						
-					</li>
-				</ul>
-				<hr>
+				<div class="mb-3">
+			    	<label for="exampleInputPassword" class="form-label">Password</label>
+			    	<input type="password" class="form-control" name="pw" placeholder="Password를 16자 이내로 입력해주세요" maxlength=16 required>
+			  	</div>
+
 				<button class="btn btn-danger btn-sm" type="submit">회원 삭제하기</button>
 				<button class="btn btn-secondary btn-sm" onclick="history.back(); return false;">뒤로 돌아가기</button>
 				<button class="btn btn-warning btn-sm" onclick="location.href='/member/list'; return false;">리스트 페이지로 돌아가기</button>
