@@ -11,20 +11,35 @@
 	</head>
 	<body>
 		<div class="container mt-5">
-			<h2 th:text="${pageTitle}"></h2>
+			<h2>[[${pageTitle}]]</h2>
 		</div>
-		<div class="container">
+		
+		<div class="container" th:if="${tempId == null}">
 			<hr>
 				<p class="text-center my-5">먼저 로그인을 해주세요!</p>
 			<hr>
 			<button
 				class="btn btn-primary btn-sm"
-				th:onclick="|location.href='@{/member/create}';|"
-			>회원가입</button>
+				th:onclick="|location.href='@{/member/create}';|">
+				<!-- th:onclick="@{|location.href='member/create';|}" -->
+			회원가입</button>
 			<button
 				class="btn btn-secondary btn-sm"
-				th:onclick="|location.href='@{/${loginType}/login}';|"
-			>로그인</button>
+				th:onclick="|location.href='@{/{loginType}/login (loginType=${loginType})}';|">
+				<!-- th:onclick="@{|location.href='${loginType}/login';|}" -->
+				로그인</button>
 		</div>
+		
+		<div class="container" th:unless="${tempId == null}">
+			<hr>
+			<p class="text-center my-5"><span th:text="${tempId}"></span> 회원님 로그인을 환영합니다.</p>
+			<hr>
+			<button class="btn btn-success btn-sm">마이페이지</button>
+			<button class="btn btn-info btn-sm">회원수정</button>
+			<button class="btn-btn-danger btn-sm">회원탈퇴</button>
+			<button class="btn btn-dark btn-sm">로그아웃</button>
+		
+		</div>
+		
 	</body>
 </html>

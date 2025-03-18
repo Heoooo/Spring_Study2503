@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mysite.demo.entity.Member;
 import com.mysite.demo.service.MemberService;
 
 @Controller
@@ -24,6 +25,13 @@ public class LoginController {
 		model.addAttribute("loginType", "cookie");
 		model.addAttribute("pageTitle", "Cookie Login");
 		
+		//getLoginMemberById
+		Member loginMember = memberService.getLoginMemberById(memberId);
+		
+		//loginMember null 값이 아니면
+		if(loginMember != null) {
+			model.addAttribute("tempId", loginMember.getId());
+		}
 		
 		return "login/main";
 	}

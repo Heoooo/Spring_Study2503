@@ -29,6 +29,13 @@ MemberService
 	login()
 MemberRepository
 	Optional<Member> findById(String id)
+LoginRequest
 뷰
 	login/main.html
 	login/login.html
+	
+	
+//궁금점
+th:onclick = "@{}"
+th:onclick = "|location링크|"
+컨트롤러에서 뷰로 데이터 전달 시

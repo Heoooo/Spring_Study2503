@@ -1,6 +1,7 @@
 package com.mysite.demo.service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,5 +98,19 @@ public class MemberService {
 		pageable = PageRequest.of(page, 3, Sort.by(Order.desc("idx")));
 		
 		return memberRepository.findById(keyword, pageable);
+	}
+
+
+	//Login::getLoginMemberById
+	public Member getLoginMemberById(String id) {
+		if(id == null) return null;
+		
+		//DB::Find
+		Optional<Member> optionalMember = memberRepository.findById(id);
+		
+		if (optionalMember.isEmpty()) return null;
+		
+		return optionalMember.get();
+		
 	}
 }
