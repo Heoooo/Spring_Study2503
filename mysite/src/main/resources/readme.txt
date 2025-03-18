@@ -15,3 +15,20 @@
 	결론: BCrypt.checkpw() 메서드 사용
 	BCrypt 암호화 문자열-> 같은 비번이라도 랜덤 솔트 사용해서 매번 다른 암호화 문자열 생성
 	equals()로 비교하면 항상 일치하지 않음
+	
+	
+//로그인 구현
+Login.controller
+@RequestMapping("/cookie")
+	@GetMapping(value={"","/"})
+	@GetMApping("/login")
+	@PostMapping("/login")
+	@GetMapping("/mypage")
+MemberService
+	getLoginMemberById()
+	login()
+MemberRepository
+	Optional<Member> findById(String id)
+뷰
+	login/main.html
+	login/login.html
