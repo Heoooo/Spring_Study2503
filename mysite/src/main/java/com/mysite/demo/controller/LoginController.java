@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mysite.demo.dto.LoginRequest;
 import com.mysite.demo.entity.Member;
 import com.mysite.demo.service.MemberService;
 
@@ -43,6 +44,7 @@ public class LoginController {
 		//Model 데이터 추가
 		model.addAttribute("loginType", "cookie");
 		model.addAttribute("pageTitle", "Cookie Login");
+		model.addAttribute("loginRequest", new LoginRequest());
 		
 		return "login/login";
 	}

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title th:text="${pageTitle}"></title>
@@ -16,7 +15,33 @@
 	</head>
 	<body>
 		
-		<div></div>
+		<div class="container mt-5">
+			<h2>[[${pageTitle}]]</h2>
+		</div>
+		
+		<div class="container">
+			<hr>
+			<p>Login 시도 시 문제가 발생하면 관리자 메일로 문의주세요!</p>
+			<hr>
+			
+		<form th:action="|@{/{loginType}/login (loginType=${loginType})}|" th:method="POST" th:object="${loginRequest}">
+		  <div class="mb-3">
+		    <label for="id" class="form-label">ID</label>
+		    <input type="text" th:field="*{id}"class="form-control" id="id" name="id" maxlength=16 required>
+		  </div>
+		  
+		  <div class="mb-3">
+		    <label for="pw" class="form-label">Password</label>
+		    <input type="password" th:field="*{pw}"class="form-control" id="pw" name="pw" maxlength=16 required>
+		  </div>
+		  
+		  <!-- 필드 오류 메세지 -->
+
+		  <button type="submit" class="btn btn-primary btn-sm">Login</button>
+		  <button class="btn btn-success btn-sm" onclick="location.href='/member/create'; return false;">회원가입</button>
+		  <button class="btn btn-secondary btn-sm" th:onclick="|location.href='@{/{loginType} (loginType=${loginType})}'; return false;|">로그인 메인 페이지</button>
+		</form>
+		</div>
 	
 	</body>
 </html>
