@@ -35,4 +35,15 @@ public class LoginController {
 		
 		return "login/main";
 	}
+
+
+	@GetMapping("/login")
+	public String loginPage(Model model) {
+		
+		//Model 데이터 추가
+		model.addAttribute("loginType", "cookie");
+		model.addAttribute("pageTitle", "Cookie Login");
+		
+		return "login/login";
+	}
 }
