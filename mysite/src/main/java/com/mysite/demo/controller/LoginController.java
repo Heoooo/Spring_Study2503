@@ -60,7 +60,6 @@ public class LoginController {
 
 	//Login(Post)
 	@PostMapping("/login")
-	@ResponseBody
 	public String login(
 			@ModelAttribute LoginRequest loginRequest,
 			BindingResult bindingResult,
@@ -91,5 +90,21 @@ public class LoginController {
 		
 		return "redirect:/cookie";
 	
+	}
+	
+	//Logout
+	@GetMapping("/logout")
+	public String logout(HttpServletResponse res, Model model) {
+		
+		//Model 데이터 추가
+		model.addAttribute("loginType", "cookie");
+		model.addAttribute("pageTitle", "Logout Page");
+		
+		//Cookie 제거
+		Cookie cookie = new Cookie("memberId", null);
+		cookie.setMaxAge(0);
+		res.addCookie(cookie);
+		
+		return "redirect:/cookie";
 	}
 }

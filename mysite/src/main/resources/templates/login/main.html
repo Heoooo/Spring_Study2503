@@ -37,7 +37,9 @@
 			<button class="btn btn-success btn-sm">마이페이지</button>
 			<button class="btn btn-info btn-sm">회원수정</button>
 			<button class="btn-btn-danger btn-sm">회원탈퇴</button>
-			<button class="btn btn-dark btn-sm">로그아웃</button>
+			<button class="btn btn-dark btn-sm"
+				th:onclick="|location.href='@{/{loginType}/logout (loginType=${loginType})}';|"
+			>로그아웃</button>
 		
 		</div>
 		
