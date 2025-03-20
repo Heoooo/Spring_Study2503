@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
+import com.mysite.demo.dto.LoginRequest;
 import com.mysite.demo.dto.MemberCreateDTO;
 import com.mysite.demo.entity.Member;
 import com.mysite.demo.entity.MemberRepository;
@@ -101,7 +102,7 @@ public class MemberService {
 	}
 
 
-	//Login::getLoginMemberById
+	//Login::getLoginMemberById()
 	public Member getLoginMemberById(String id) {
 		if(id == null) return null;
 		
@@ -112,5 +113,26 @@ public class MemberService {
 		
 		return optionalMember.get();
 		
+	}
+	
+	//Login::login()
+	public Member login(LoginRequest req) {
+		
+		//사용자가 입력한 아이디에 맞는 회원 정보가 있으면
+		Optional<Member> optionalMember = memberRepository.findById(req.getId());
+	
+		//일치하는 객체가 없으면
+		if (optionalMember.isEmpty()) {
+			return null;
+		}
+		//있다면
+		Member member = optionalMember.get();
+		
+		//비밀번호 확인
+		if (!BCrypt.checkpw(req.getPw(), member.getPw())) {
+			return null;
+		}
+		
+		return member;
 	}
 }

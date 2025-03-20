@@ -15,6 +15,7 @@ import com.mysite.demo.dto.LoginRequest;
 import com.mysite.demo.entity.Member;
 import com.mysite.demo.service.MemberService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -66,10 +67,29 @@ public class LoginController {
 			HttpServletResponse response,
 			Model model
 			) {
-		
+		//Model 데이터 추가
 		model.addAttribute("loginType", "cookie");
 		model.addAttribute("pageTitle", "Cookie Login");
 		
-		return String.valueOf(loginRequest.getId() + loginRequest.getPw());
+		//MemberService > login() 메소드 호출
+		Member member = memberService.login(loginRequest);
+		
+		//로그인 아이디 혹은 비밀번호 틀린 경우
+		if (member == null) {
+			bindingResult.reject("loginFail", "회원님이 입력하신 ID 정보가 DB에 없거나 또는 Password 정보가 올바르지 않습니다.");
+		}
+		
+		//뷰로 에러 메시지 출력
+		if (bindingResult.hasErrors()) {
+			return "login/login";
+		}
+		
+		//로그인 성공 => 쿠키 생성
+		Cookie cookie = new Cookie("memberId", String.valueOf(member.getId()));
+		cookie.setMaxAge(60);	//쿠키 만료 시간 초 단위로 설정
+		response.addCookie(cookie);
+		
+		return "redirect:/cookie";
+	
 	}
 }

@@ -36,6 +36,10 @@
 		  </div>
 		  
 		  <!-- 필드 오류 메세지 -->
+		  <div class="mb-3" th:if="${#fields.hasGlobalErrors()}">
+		  	<div class="text-danger fw-bold" th:each="error:${#fields.globalErrors()}" th:text="${error}"></div>
+		  </div>
+		  
 
 		  <button type="submit" class="btn btn-primary btn-sm">Login</button>
 		  <button class="btn btn-success btn-sm" onclick="location.href='/member/create'; return false;">회원가입</button>
