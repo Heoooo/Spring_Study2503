@@ -33,6 +33,7 @@ LoginRequest
 뷰
 	login/main.html
 	login/login.html
+	login/mypage.html
 	
 	
 //궁금점

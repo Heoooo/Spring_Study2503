@@ -107,4 +107,27 @@ public class LoginController {
 		
 		return "redirect:/cookie";
 	}
+	
+	
+	//MyPage
+	@GetMapping("/mypage")
+	public String mypage(@CookieValue(name = "memberId", required = false) String memberId, Model model) {
+		
+		//Model 데이터 추가
+		model.addAttribute("loginType", "cookie");
+		model.addAttribute("pageTitle", "My Page");
+		
+		//쿠키 정보가 브라우저에 존재한다면
+		Member loginMember = memberService.getLoginMemberById(memberId);
+		
+		//로그인 정보가 없다면 로그인 페이지로 이동
+		if (loginMember == null) {
+			return "redirect:/cookie/login";
+		}
+		
+		//로그인 정보가 있다면 해당 뷰로 이동
+		model.addAttribute("member", loginMember);
+		
+		return "login/mypage";
+	}
 }
