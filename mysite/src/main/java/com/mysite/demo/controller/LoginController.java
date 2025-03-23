@@ -53,12 +53,37 @@ public class LoginController {
 	
 	//Login(Get)
 	@GetMapping("/login")
-	public String loginPage(Model model) {
+	public String loginPage(@CookieValue(name="memberId", required=false) String memberId, Model model) {
 		
 		//Model 데이터 추가
 		model.addAttribute("loginType", "cookie");
 		model.addAttribute("pageTitle", "Cookie Login");
-		model.addAttribute("loginRequest", new LoginRequest());
+		//model.addAttribute("loginRequest", new LoginRequest());
+		
+		//브라우저에 쿠키 값이 존재하면 해당 객체 가져와서 뷰로 전달
+		//먼저 해당 메소드 파라미터로 @CookieValue() 사용
+		//단, 세션을 같이 사용 시 적용하는 것이 좋고 쿠키만으로 할 때는 비권장
+		Member member = memberService.getLoginMemberById(memberId);
+		
+		//memberId 쿠키 값이 DB에 존재한다면
+		if(member != null) {
+			model.addAttribute("loginRequest", member);
+		}
+		else {
+			model.addAttribute("loginRequest", new LoginRequest());
+		}
+		
+		//데이터베이스 검색하지 않고 쿠키 여부에 따라 조건 처리하는 경우
+		/*
+		LoginRequest loginRequest = new LoginRequest();
+		if (memberId != null) {
+			loginRequest.setId(memberId);
+			model.addAttribute("loginRequest", loginRequest);
+		}
+		else {
+			model.addAttribute("loginRequest", loginRequest);
+		}		
+		*/
 		
 		return "login/login";
 	}
