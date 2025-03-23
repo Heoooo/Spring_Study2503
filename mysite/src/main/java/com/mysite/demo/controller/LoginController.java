@@ -28,7 +28,10 @@ public class LoginController {
 	
 	//Main
 	@GetMapping(value= {"", "/"})
-	public String main(@CookieValue(name="memberId", required=false) String memberId, Model model) {
+	public String main(
+			@CookieValue(name="memberId", required=false) String memberId,
+			@CookieValue(name="memberIdFlag", required=false) String memberIdFlag,
+			Model model) {
 		//required
 		//1. 쿠키 필수 여부 설정, 기본은 true
 		//2. 쿠키 값이 없는 경우는 null 값이 memberId 변수에 들어감
@@ -39,12 +42,16 @@ public class LoginController {
 		model.addAttribute("loginType", "cookie");
 		model.addAttribute("pageTitle", "Cookie Login");
 		
+		
 		//getLoginMemberById
 		Member loginMember = memberService.getLoginMemberById(memberId);
 		
-		//loginMember null 값이 아니면
-		if(loginMember != null) {
-			model.addAttribute("tempId", loginMember.getId());
+		//브라우저에 memberIdFlag 값이 null이 아니면
+		if (memberIdFlag != null) {
+			//loginMember null 값이 아니면
+			if(loginMember != null && memberIdFlag.equals(String.valueOf(loginMember.getIdx()))) {
+				model.addAttribute("tempId", loginMember.getId());
+			}			
 		}
 		
 		return "login/main";
@@ -119,6 +126,11 @@ public class LoginController {
 		cookie.setMaxAge(60);	//쿠키 만료 시간 초 단위로 설정
 		response.addCookie(cookie);
 		
+		//memberIdFlag 쿠키 생성
+		Cookie memberIdFlag = new Cookie("memberIdFlag", String.valueOf(member.getIdx()));
+		memberIdFlag.setMaxAge(60);
+		response.addCookie(memberIdFlag);
+		
 		return "redirect:/cookie";
 	
 	}
@@ -132,9 +144,14 @@ public class LoginController {
 		model.addAttribute("pageTitle", "Logout Page");
 		
 		//Cookie 제거
-		Cookie cookie = new Cookie("memberId", null);
-		cookie.setMaxAge(0);
-		res.addCookie(cookie);
+		//Cookie cookie = new Cookie("memberId", null);
+		//cookie.setMaxAge(0);
+		//res.addCookie(cookie);
+		
+		//Cookie 제거 : memberIdFlag
+		Cookie memberIdFlag = new Cookie("memberIdFlag", null);
+		memberIdFlag.setMaxAge(0);
+		res.addCookie(memberIdFlag);
 		
 		return "redirect:/cookie";
 	}
