@@ -16,6 +16,7 @@ import com.mysite.demo.entity.Member;
 import com.mysite.demo.service.MemberService;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
@@ -102,6 +103,7 @@ public class LoginController {
 			@ModelAttribute LoginRequest loginRequest,
 			BindingResult bindingResult,
 			HttpServletResponse response,
+			HttpServletRequest request,
 			Model model
 			) {
 		//Model 데이터 추가
@@ -130,6 +132,26 @@ public class LoginController {
 		Cookie memberIdFlag = new Cookie("memberIdFlag", String.valueOf(member.getIdx()));
 		memberIdFlag.setMaxAge(60);
 		response.addCookie(memberIdFlag);
+		
+		/*
+		//쿠키 만들 때 여러 개의 속성 값으로 만들기 
+		String memberIdValue = String.valueOf(member.getId());
+		String memberIdFlagValue = String.valueOf(member.getIdx());
+		String combinedValue = memberIdValue + "|" + memberIdFlagValue;
+		
+		Cookie cookie = new Cookie("memberId", combinedValue);	//superman
+		cookie.setMaxAge(60);
+		response.addCookie(cookie);
+		
+		
+		//브라우저 쿠키 가져와서 반복문으로 출력하기
+		Cookie[] myCookies = request.getCookies();
+		if (myCookies != null) {
+			for (int i=0; i<myCookies.length; i++) {
+				System.out.println(i+"번째 쿠키 이름 :" +myCookies[i].getName() + "|" + myCookies[i].getValue());
+			}
+		}
+		*/
 		
 		return "redirect:/cookie";
 	
