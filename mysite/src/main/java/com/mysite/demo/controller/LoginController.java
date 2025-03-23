@@ -26,8 +26,14 @@ public class LoginController {
 	@Autowired
 	private MemberService memberService;
 	
+	//Main
 	@GetMapping(value= {"", "/"})
 	public String main(@CookieValue(name="memberId", required=false) String memberId, Model model) {
+		//required
+		//1. 쿠키 필수 여부 설정, 기본은 true
+		//2. 쿠키 값이 없는 경우는 null 값이 memberId 변수에 들어감
+		//3. primitive 원시 타입을 사용하는 경우 500에러 발생 가능성, 가능하면 Reference Type 사용
+		
 		
 		//모델에 데이터 추가
 		model.addAttribute("loginType", "cookie");
