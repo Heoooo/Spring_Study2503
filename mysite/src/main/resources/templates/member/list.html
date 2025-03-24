@@ -19,6 +19,7 @@
 						<th>ID</th>
 						<th>Password</th>
 						<th>Email</th>
+						<th>Role</th>
 						<th>Update</th>
 						<th>Delete</th>
 					</tr>
@@ -27,8 +28,10 @@
 					<tr class="align-middle" th:each="member : ${paging}">
 						<td th:text="${member.idx}"></td>
 						<td th:text="${member.id}"></td>
-						<td th:text="${member.pw}"></td>
+						<!--td th:text="${member.pw.substring(0, 10)}"></td-->
+						<td th:text="|${#strings.substring(member.pw, 0, 10)}...|"></td>
 						<td th:text="${member.email}"></td>
+						<td th:text="${member.role}"></td>
 						<td>
 							<button 
 								class="btn btn-outline-primary btn-sm"
