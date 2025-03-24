@@ -197,6 +197,7 @@ public class LoginController {
 		Member loginMember = memberService.getLoginMemberById(memberId);
 		
 		//로그인 정보가 없다면 로그인 페이지로 이동
+		/*
 		if (loginMember == null) {
 			//응답 객체 설정
 			//response.setContentType("text/html; charset=UTF-8");
@@ -211,6 +212,11 @@ public class LoginController {
 			//writer.flush();
 			
 			return "redirect:/cookie/login";
+		}
+		*/
+		if (loginMember == null) {
+			model.addAttribute("alertMsg", "먼저 로그인을 해주세요!");
+			return "login/mypage";
 		}
 		
 		//로그인 정보가 있다면 해당 뷰로 이동
