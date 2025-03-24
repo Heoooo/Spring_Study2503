@@ -1,5 +1,8 @@
 package com.mysite.demo.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -181,7 +184,10 @@ public class LoginController {
 	
 	//MyPage
 	@GetMapping("/mypage")
-	public String mypage(@CookieValue(name = "memberId", required = false) String memberId, Model model) {
+	public String mypage(@CookieValue(name = "memberId", required = false) String memberId,
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Model model) throws IOException{
 		
 		//Model 데이터 추가
 		model.addAttribute("loginType", "cookie");
@@ -192,6 +198,18 @@ public class LoginController {
 		
 		//로그인 정보가 없다면 로그인 페이지로 이동
 		if (loginMember == null) {
+			//응답 객체 설정
+			//response.setContentType("text/html; charset=UTF-8");
+			//PrintWriter writer = response.getWriter();
+			
+			//브라우저에 출력할 경고 또는 안내문 작성
+			//writer.println("<script>");
+			//writer.println("alert('로그인 정보가 없습니다. 다시 로그인 페이지로 이동합니다.');");
+			//writer.println("window.location.href='/cookie/login';");
+			//writer.println("</script>");
+			
+			//writer.flush();
+			
 			return "redirect:/cookie/login";
 		}
 		
