@@ -40,3 +40,27 @@ LoginRequest
 th:onclick = "@{}"
 th:onclick = "|location링크|"
 컨트롤러에서 뷰로 데이터 전달 시
+
+
+//롬복 추가 및 회원 Role 열거형 사용하기
+필요한 파일들
+	build.gradle
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		
+		--롬복 플러그인 다운로드 및 설치
+		--플러그인이란? 하나의 모듈로서 응용 프로그램에 추가 기능을 넣고 기능을 확장시켜주는 역할
+		https://projectlombok.org/download
+			1.lombok.jar 파일을 명령 프롬프트 창에서 설치하는 것 가능하나 그냥 더블클릭하면 알아서 자동으로 설치
+			2.설치하는 창이 뜨면 STS 툴이 설치된 경로 선택 후 설치하면 끝
+	
+	Member.java
+	MemberRole.java
+		class=>enum
+		0 -> MEMBER
+		1 -> ...
+		2 -> ...
+		3 -> ADMIN
+	MemberCreateDTO.java
+	MemberService.java => insert() 메소드 수정
+	list.html
