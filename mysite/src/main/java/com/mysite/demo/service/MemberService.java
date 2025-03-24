@@ -16,6 +16,7 @@ import com.mysite.demo.dto.LoginRequest;
 import com.mysite.demo.dto.MemberCreateDTO;
 import com.mysite.demo.entity.Member;
 import com.mysite.demo.entity.MemberRepository;
+import com.mysite.demo.entity.MemberRole;
 
 @Service
 public class MemberService {
@@ -53,6 +54,7 @@ public class MemberService {
 		member.setId(memberCreateDTO.getId());
 		member.setPw(hashedUserPw);
 		member.setEmail(memberCreateDTO.getEmail());
+		member.setRole(MemberRole.MEMBER);	//0
 		
 		//3.Save
 		memberRepository.save(member);

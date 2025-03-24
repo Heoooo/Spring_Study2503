@@ -5,8 +5,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member {
 	
 	@Id
@@ -19,39 +27,9 @@ public class Member {
 	private String pw;
 	
 	@Column(unique = true)
-	private String email;
-
-	public Integer getIdx() {
-		return idx;
-	}
-
-	public void setIdx(Integer idx) {
-		this.idx = idx;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getPw() {
-		return pw;
-	}
-
-	public void setPw(String pw) {
-		this.pw = pw;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	private String email;	
 	
+	@Column
+	private MemberRole role;	//타입은 열거형 숫자 타입 => 보통 TINYINT
 	
 }
