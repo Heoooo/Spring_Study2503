@@ -54,7 +54,7 @@ public class MemberService {
 		member.setId(memberCreateDTO.getId());
 		member.setPw(hashedUserPw);
 		member.setEmail(memberCreateDTO.getEmail());
-		member.setRole(MemberRole.MEMBER);	//0
+		member.setRole(MemberRole.MEMBER);
 		
 		//3.Save
 		memberRepository.save(member);
