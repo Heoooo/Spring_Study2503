@@ -4,8 +4,6 @@ public enum MemberRole {
 	
 	//열거 상수
 	MEMBER,
-	MANAGER,
-	GUEST,
 	ADMIN;
 	
 	//데이터베이스 입력
